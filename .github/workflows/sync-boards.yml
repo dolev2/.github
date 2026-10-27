@@ -1,0 +1,47 @@
+name: Sync boards
+
+# The scheduled half of the label <-> board sync, for every private repo of dolev2 at once.
+# A card dragged on a user-owned Project board raises no webhook, so only a poll notices it.
+# Run in each private repo, that poll used up the free Actions minutes; here, in a public
+# repo, it is free (dolev2/claude-config #46). Each repo's own sync-project.yml keeps the
+# issue events.
+#
+# The log is public: sweep_all.py prints counts only, never a repo, issue or sprint name.
+# The code is fetched with `gh api` rather than actions/checkout, whose log shows the
+# latest claude-config commit subject.
+#
+# Needs the SYNC_BOARDS secret: a PAT with project + repo, like PROJECT_TOKEN in the
+# private repos.
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: The claude-config branch to run, to try a change before it is merged
+        default: main
+# No pull_request trigger on purpose: a PR from a fork must never reach the secret.
+
+permissions: {}
+
+concurrency:
+  group: sync-boards
+  cancel-in-progress: false
+
+jobs:
+  sweep:
+    if: github.repository == 'dolev2/.github'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Sync every board
+        env:
+          GH_TOKEN: ${{ secrets.SYNC_BOARDS }}
+          REF: ${{ inputs.ref || 'main' }}
+        run: |
+          base="repos/dolev2/claude-config/contents/skills/dev-setup/actions/project-sync"
+          for f in sweep_all.py sync_project.py; do
+            gh api -H "Accept: application/vnd.github.raw" "$base/$f?ref=$REF" > "$f"
+          done
+          python3 sweep_all.py

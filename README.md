@@ -11,3 +11,11 @@ GitHub מציג את הטפסים מכאן בכל ריפו של החשבון ש�
 **כל תווית שטופס מוסיף חייבת להיות קיימת גם כאן**, ולא רק בריפו שבו נפתח ה-issue. כרגע: `task`, `bug`, `owner:claude`, `status:explore`, `status:ready-to-execute`. תווית חדשה בטופס נוצרת כאן באותו commit (`gh label create <name> -R dolev2/.github`).
 
 **הריפו חייב להישאר ציבורי.** GitHub משתמש בברירות המחדל רק מריפו `.github` ציבורי.
+
+## מדריך קבצים
+| קובץ | מה הוא | למה הוא קיים |
+|---|---|---|
+| `.github/ISSUE_TEMPLATE/` | טפסי ה-issues של כל הריפואים | ברירת מחדל לכל ריפו של החשבון |
+| `.github/workflows/sync-boards.yml` | הבדיקה המתוזמנת של סנכרון הלוחות, כל 15 דקות, לכל הריפואים הפרטיים בבת אחת | כאן דקות ה-Actions בחינם, ובריפו פרטי הן נגמרו ([claude-config #46](https://github.com/dolev2/claude-config/issues/46)). צריך את ה-secret `SYNC_BOARDS` (טוקן עם `repo` ו-`project`) |
+
+**הלוג של `sync-boards.yml` ציבורי.** הוא מדפיס רק מספרים, בלי שמות של ריפואים, issues או ספרינטים. שינוי בו או ב-`sweep_all.py` שומר על זה.
