@@ -10,7 +10,8 @@ name: Sync boards
 # The code is fetched with `gh api` rather than actions/checkout, whose log shows the
 # latest claude-config commit subject.
 #
-# Needs the PROJECT_TOKEN secret: the same PAT as in the private repos (project + repo).
+# Needs the SYNC_BOARDS secret: a PAT with project + repo, like PROJECT_TOKEN in the
+# private repos.
 
 on:
   schedule:
@@ -36,7 +37,7 @@ jobs:
     steps:
       - name: Sync every board
         env:
-          GH_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+          GH_TOKEN: ${{ secrets.SYNC_BOARDS }}
           REF: ${{ inputs.ref || 'main' }}
         run: |
           base="repos/dolev2/claude-config/contents/skills/dev-setup/actions/project-sync"
