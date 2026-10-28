@@ -16,6 +16,6 @@ GitHub מציג את הטפסים מכאן בכל ריפו של החשבון ש�
 | קובץ | מה הוא | למה הוא קיים |
 |---|---|---|
 | `.github/ISSUE_TEMPLATE/` | טפסי ה-issues של כל הריפואים | ברירת מחדל לכל ריפו של החשבון |
-| `.github/workflows/sync-boards.yml` | הבדיקה המתוזמנת של סנכרון הלוחות, כל 15 דקות, לכל הריפואים הפרטיים בבת אחת | כאן דקות ה-Actions בחינם, ובריפו פרטי הן נגמרו ([claude-config #46](https://github.com/dolev2/claude-config/issues/46)). צריך את ה-secret `SYNC_BOARDS` (טוקן עם `repo` ו-`project`) |
+| `.github/workflows/sync-boards.yml` | הבדיקה המתוזמנת של סנכרון הלוחות, כל 15 דקות, לכל הריפואים הפרטיים בבת אחת | כאן דקות ה-Actions בחינם, ובריפו פרטי הן נגמרו ([claude-config #46](https://github.com/dolev2/claude-config/issues/46)). צריך את ה-secret `SYNC_BOARDS` (טוקן עם `repo` ו-`project`), ואת המשתנה `EXPECTED_BOARDS`: כמה לוחות יש. מספר אחר מכשיל את הריצה ([claude-config #49](https://github.com/dolev2/claude-config/issues/49)) |
 
 **הלוג של `sync-boards.yml` ציבורי.** הוא מדפיס רק מספרים, בלי שמות של ריפואים, issues או ספרינטים. שינוי בו או ב-`sweep_all.py` שומר על זה.

@@ -12,6 +12,10 @@ name: Sync boards
 #
 # Needs the SYNC_BOARDS secret: a PAT with project + repo, like PROJECT_TOKEN in the
 # private repos.
+#
+# Needs the EXPECTED_BOARDS variable: how many repos have a board. A token that sees too
+# few repos also sees too few boards, so the run fails when it finds any other number
+# (dolev2/claude-config #49). dev-setup updates it when it installs a board.
 
 on:
   schedule:
@@ -38,6 +42,7 @@ jobs:
       - name: Sync every board
         env:
           GH_TOKEN: ${{ secrets.SYNC_BOARDS }}
+          EXPECTED_BOARDS: ${{ vars.EXPECTED_BOARDS }}
           REF: ${{ inputs.ref || 'main' }}
         run: |
           base="repos/dolev2/claude-config/contents/skills/dev-setup/actions/project-sync"
