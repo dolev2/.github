@@ -46,7 +46,10 @@ jobs:
           REF: ${{ inputs.ref || 'main' }}
         run: |
           base="repos/dolev2/claude-config/contents/skills/dev-setup/actions/project-sync"
-          for f in sweep_all.py sync_project.py; do
+          # Every .py in the folder, not a fixed list: sync_project.py imports modules next to
+          # it, and a file missing here breaks every board at once (dolev2/claude-config#57).
+          files=$(gh api "$base?ref=$REF" --jq '.[] | select(.name | endswith(".py")) | .name')
+          for f in $files; do
             gh api -H "Accept: application/vnd.github.raw" "$base/$f?ref=$REF" > "$f"
           done
           python3 sweep_all.py
