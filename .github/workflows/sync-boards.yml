@@ -1,7 +1,9 @@
 name: Sync boards
 
-# The scheduled half of the label <-> board sync, for every private repo of dolev2 at once.
-# A card dragged on a user-owned Project board raises no webhook, so only a poll notices it.
+# The scheduled half of the label -> board sync, for every private repo of dolev2 at once.
+# The sync is one way: a card dragged on a user-owned Project board raises no webhook, so
+# this poll is what puts it back in the column of its label, and it catches up on an issue
+# event whose run failed (dolev2/claude-config#111).
 # Run in each private repo, that poll used up the free Actions minutes; here, in a public
 # repo, it is free (dolev2/claude-config #46). Each repo's own sync-project.yml keeps the
 # issue events.
