@@ -1,7 +1,7 @@
 name: באג
 description: תקלה שהתגלתה — בדרך כלל במשימה שכבר בוצעה
 title: ""
-labels: ["bug", "owner:claude", "status:ready-to-execute"]
+labels: ["bug", "status:ready-to-execute"]
 body:
   - type: input
     id: related

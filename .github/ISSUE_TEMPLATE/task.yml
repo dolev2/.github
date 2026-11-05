@@ -1,7 +1,7 @@
 name: משימה
 description: משימה חדשה לצינור
 title: ""
-labels: ["task", "owner:claude", "status:explore"]
+labels: ["task", "status:explore"]
 body:
   - type: textarea
     id: goal
